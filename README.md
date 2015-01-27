@@ -12,11 +12,8 @@ CapCast will allow video conferencing using a web-browser while producing captio
  
 ## Key Features
 CapCast will allow a user to do the following:
-- account/screen name creation.
-- find users to call
-- see offline/online status of another user.
+- generate a link for the video conference that users can share to join the conference.
 - call one or more users.
-- add/remove users from the call.
 - turn captioning on/off.
 - turn translations on/off.
 
@@ -28,7 +25,7 @@ We have broken down the project into the following components that correspond to
 A client is simply a browser running on a user's computer. If the call is one-to-one (only two clients connected to each other), then capCast will use a P2P connection using WebRTC in order to stream the video conference. Otherwise, it will switch to using a capCast host server to carry out the communication.
 
 ### CapCast Host Servers (csc 462 / 562 - Distributed Systems Component)
-CapCast host servers will be a distributed system that host the application. The servers will host user and connection data and authenticate users. In addition, the servers will be used for video streaming when a call involves more than two clients. We will simulate delays, network loss, and node fault to demonstrate the system's ability to cope with failure.
+CapCast host servers will be a distributed system that host the application. The system will facilitate a call between users. If there are two clients, the system will offload the streaming to the p2p model, where the clients will handle the streaming amongst themselves. When a call involves more than two clients, the server will facilitate the video streaming. We will simulate delays, network loss, and node fault to demonstrate the system's ability to cope with failure.
 
 ### Video Streaming and Captioning (csc 461 / 561 - Multimedia Systems Component)
 Video conferencing will be done using HTML5 and WebRTC. Real-time speech to text captioning will be done using the Google Web Speech API.
