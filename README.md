@@ -1,8 +1,19 @@
 # capCast
 A video conferencing app that produces speech to text captions in real time. This project will comprise of combined project work for Csc 462/562, Csc 466/566, and Csc 461/561.
 
-## Usage
-CapCast will allow video conferencing using a web-browser while producing captions in real time. This can aid in better communication between users with or without special needs. 
+#Our Website:
+<http://rpanjwani.github.io/capcast>
+
+## Why?
+CapCast will allow video conferencing using a web-browser while producing captions in real time. This can aid in better communication between users in the following ways:
+- When there are connection problems at the client end, the video and audio quality may degrade making communication difficult. Having captions can allow the conversation to go on.
+- Help people with hearing disabilities.
+- Make communication better by simply using more channels (video/audio + caption text).
+- Save the transcript so the clients can review it later without having to save the audio/video.
+- Users don't have to sign up for accounts. They just have to generate a one-time shareable link for a conversation and distribute it to the parties with whom communication is desired. 
+
+## What else is out there?
+There are other video conferencing services out there like skype, google hangouts, etc. However, we haven't been able to find anything that provides captioning in real time. Also these other services make people sign up for accounts, whereas with our service, users just have to generate a one-time shareable link for a conversation and distribute it to the parties with whom communication is desired. 
  
 ## Contributors
 - Riz Panjwani
@@ -15,7 +26,7 @@ CapCast will allow a user to do the following:
 - generate a link for the video conference that users can share to join the conference.
 - call one or more users.
 - turn captioning on/off.
-- turn translations on/off.
+- save the caption transcript.
 
 ## Major Components
 
@@ -30,10 +41,11 @@ CapCast host servers will be a distributed system that host the application. The
 ### Video Streaming and Captioning (csc 461 / 561 - Multimedia Systems Component)
 Video conferencing will be done using HTML5 and WebRTC. Real-time speech to text captioning will be done using the Google Web Speech API.
 
-
-## Challenges
-
-## Milestones
+## Milestones (2015)
+- Feb 16: Have the Host Servers up and running on a distributed system .... ( project 1 due in 462)
+- Mar 2: 
+- Mar 16:
+- Mar 23: Finalized system.
 
 
 
