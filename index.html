@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Capcast : a video conferencing app">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Capcast</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/rpanjwani/capcast">View on GitHub</a>
+
+          <h1 id="project_title">Capcast</h1>
+          <h2 id="project_tagline">a video conferencing app</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/rpanjwani/capcast/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/rpanjwani/capcast/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="capcast" class="anchor" href="#capcast" aria-hidden="true"><span class="octicon octicon-link"></span></a>capCast</h1>
+
+<p>A video conferencing app that produces speech to text captions in real time. This project will comprise of combined project work for Csc 462/562, Csc 466/566, and Csc 461/561.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>CapCast will allow video conferencing using a web-browser while producing captions in real time. This can aid in better communication between users with or without special needs. </p>
+
+<h2>
+<a id="contributors" class="anchor" href="#contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributors</h2>
+
+<ul>
+<li>Riz Panjwani</li>
+<li>Harsh Dawar</li>
+<li>Sumit Kadyan</li>
+<li>Khushbu Gandhi</li>
+</ul>
+
+<h2>
+<a id="key-features" class="anchor" href="#key-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Key Features</h2>
+
+<p>CapCast will allow a user to do the following:</p>
+
+<ul>
+<li>generate a link for the video conference that users can share to join the conference.</li>
+<li>call one or more users.</li>
+<li>turn captioning on/off.</li>
+<li>turn translations on/off.</li>
+</ul>
+
+<h2>
+<a id="major-components" class="anchor" href="#major-components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Major Components</h2>
+
+<p>We have broken down the project into the following components that correspond to the appropriate course work below.</p>
+
+<h3>
+<a id="peer-to-peer-clients-csc-466--566---p2p-overlay-component" class="anchor" href="#peer-to-peer-clients-csc-466--566---p2p-overlay-component" aria-hidden="true"><span class="octicon octicon-link"></span></a>Peer to Peer Clients (csc 466 / 566 - P2P Overlay Component)</h3>
+
+<p>A client is simply a browser running on a user's computer. If the call is one-to-one (only two clients connected to each other), then capCast will use a P2P connection using WebRTC in order to stream the video conference. Otherwise, it will switch to using a capCast host server to carry out the communication.</p>
+
+<h3>
+<a id="capcast-host-servers-csc-462--562---distributed-systems-component" class="anchor" href="#capcast-host-servers-csc-462--562---distributed-systems-component" aria-hidden="true"><span class="octicon octicon-link"></span></a>CapCast Host Servers (csc 462 / 562 - Distributed Systems Component)</h3>
+
+<p>CapCast host servers will be a distributed system that host the application. The system will facilitate a call between users. If there are two clients, the system will offload the streaming to the p2p model, where the clients will handle the streaming amongst themselves. When a call involves more than two clients, the server will facilitate the video streaming. We will simulate delays, network loss, and node fault to demonstrate the system's ability to cope with failure.</p>
+
+<h3>
+<a id="video-streaming-and-captioning-csc-461--561---multimedia-systems-component" class="anchor" href="#video-streaming-and-captioning-csc-461--561---multimedia-systems-component" aria-hidden="true"><span class="octicon octicon-link"></span></a>Video Streaming and Captioning (csc 461 / 561 - Multimedia Systems Component)</h3>
+
+<p>Video conferencing will be done using HTML5 and WebRTC. Real-time speech to text captioning will be done using the Google Web Speech API.</p>
+
+<h2>
+<a id="challenges" class="anchor" href="#challenges" aria-hidden="true"><span class="octicon octicon-link"></span></a>Challenges</h2>
+
+<h2>
+<a id="milestones" class="anchor" href="#milestones" aria-hidden="true"><span class="octicon octicon-link"></span></a>Milestones</h2>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Capcast maintained by <a href="https://github.com/rpanjwani">rpanjwani</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
