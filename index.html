@@ -4,11 +4,11 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Capcast : a video conferencing app">
+    <meta name="description" content="Log : logbook">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>Capcast</title>
+    <title>Log</title>
   </head>
 
   <body>
@@ -18,8 +18,8 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/rpanjwani/capcast">View on GitHub</a>
 
-          <h1 id="project_title">Capcast</h1>
-          <h2 id="project_tagline">a video conferencing app</h2>
+          <h1 id="project_title">Log</h1>
+          <h2 id="project_tagline">logbook</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/rpanjwani/capcast/zipball/master">Download this project as a .zip file</a>
@@ -31,87 +31,44 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h1>
-<a id="capcast" class="anchor" href="#capcast" aria-hidden="true"><span class="octicon octicon-link"></span></a>capCast</h1>
+        <h3>
+<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
 
-<p>A video conferencing app that produces speech to text captions in real time. This project will comprise of combined project work for Csc 462/562, Csc 466/566, and Csc 461/561.</p>
+<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
 
-<h2>
-<a id="why" class="anchor" href="#why" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why?</h2>
+<pre><code>$ cd your_repo_root/repo_name
+$ git fetch origin
+$ git checkout gh-pages
+</code></pre>
 
-<p>CapCast will allow video conferencing using a web-browser while producing captions in real time. This can aid in better communication between users in the following ways:</p>
-
-<ul>
-<li>When there are connection problems at the client end, the video and audio quality may degrade making communication difficult. Having captions can allow the conversation to go on.</li>
-<li>Help people with hearing disabilities.</li>
-<li>Make communication better by simply using more channels (video/audio + caption text).</li>
-<li>Save the transcript so the clients can review it later without having to save the audio/video.</li>
-<li>Users don't have to sign up for accounts. They just have to generate a one-time shareable link for a conversation and distribute it to the parties with whom communication is desired. </li>
-</ul>
-
-<h2>
-<a id="what-else-is-out-there" class="anchor" href="#what-else-is-out-there" aria-hidden="true"><span class="octicon octicon-link"></span></a>What else is out there?</h2>
-
-<p>There are other video conferencing services out there like skype, google hangouts, etc. However, we haven't been able to find anything that provides captioning in real time. Also these other services make people sign up for accounts, whereas with our service, users just have to generate a one-time shareable link for a conversation and distribute it to the parties with whom communication is desired. </p>
-
-<h2>
-<a id="contributors" class="anchor" href="#contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributors</h2>
-
-<ul>
-<li>Riz Panjwani</li>
-<li>Harsh Dawar</li>
-<li>Sumit Kadyan</li>
-<li>Khushbu Gandhi</li>
-</ul>
-
-<h2>
-<a id="key-features" class="anchor" href="#key-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Key Features</h2>
-
-<p>CapCast will allow a user to do the following:</p>
-
-<ul>
-<li>generate a link for the video conference that users can share to join the conference.</li>
-<li>call one or more users.</li>
-<li>turn captioning on/off.</li>
-<li>save the caption transcript.</li>
-</ul>
-
-<h2>
-<a id="major-components" class="anchor" href="#major-components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Major Components</h2>
-
-<p>We have broken down the project into the following components that correspond to the appropriate course work below.</p>
+<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
 
 <h3>
-<a id="peer-to-peer-clients-csc-466--566---p2p-overlay-component" class="anchor" href="#peer-to-peer-clients-csc-466--566---p2p-overlay-component" aria-hidden="true"><span class="octicon octicon-link"></span></a>Peer to Peer Clients (csc 466 / 566 - P2P Overlay Component)</h3>
+<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
 
-<p>A client is simply a browser running on a user's computer. If the call is one-to-one (only two clients connected to each other), then capCast will use a P2P connection using WebRTC in order to stream the video conference. Otherwise, it will switch to using a capCast host server to carry out the communication.</p>
-
-<h3>
-<a id="capcast-host-servers-csc-462--562---distributed-systems-component" class="anchor" href="#capcast-host-servers-csc-462--562---distributed-systems-component" aria-hidden="true"><span class="octicon octicon-link"></span></a>CapCast Host Servers (csc 462 / 562 - Distributed Systems Component)</h3>
-
-<p>CapCast host servers will be a distributed system that host the application. The system will facilitate a call between users. If there are two clients, the system will offload the streaming to the p2p model, where the clients will handle the streaming amongst themselves. When a call involves more than two clients, the server will facilitate the video streaming. We will simulate delays, network loss, and node fault to demonstrate the system's ability to cope with failure.</p>
+<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
 
 <h3>
-<a id="video-streaming-and-captioning-csc-461--561---multimedia-systems-component" class="anchor" href="#video-streaming-and-captioning-csc-461--561---multimedia-systems-component" aria-hidden="true"><span class="octicon octicon-link"></span></a>Video Streaming and Captioning (csc 461 / 561 - Multimedia Systems Component)</h3>
+<a id="rather-drive-stick" class="anchor" href="#rather-drive-stick" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
 
-<p>Video conferencing will be done using HTML5 and WebRTC. Real-time speech to text captioning will be done using the Google Web Speech API.</p>
+<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
 
-<h2>
-<a id="milestones-2015" class="anchor" href="#milestones-2015" aria-hidden="true"><span class="octicon octicon-link"></span></a>Milestones (2015)</h2>
+<h3>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
-<ul>
-<li>Feb 16: Have the Host Servers up and running on a distributed system .... ( project 1 due in 462)</li>
-<li>Mar 2: </li>
-<li>Mar 16:</li>
-<li>Mar 23: Finalized system.</li>
-</ul>
+<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+
+<p>Having trouble with Pages? Check out the documentation at <a href="https://help.github.com/pages">https://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
       </section>
     </div>
 
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Capcast maintained by <a href="https://github.com/rpanjwani">rpanjwani</a></p>
+        <p class="copyright">Log maintained by <a href="https://github.com/rpanjwani">rpanjwani</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
