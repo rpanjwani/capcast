@@ -42,10 +42,10 @@ CapCast host servers will be a distributed system that host the application. The
 Video conferencing will be done using HTML5 and WebRTC. Real-time speech to text captioning will be done using the Google Web Speech API.
 
 ## Milestones (2015)
-- Feb 16: Have the Host Servers up and running on a distributed system .... ( project 1 due in 462)
-- Mar 2: 
-- Mar 16:
-- Mar 23: Finalized system.
+- Feb 16: Have Signal host servers up and running in order to detect peers, setup media ports, etc. in order to establish initial handshake.
+- Mar 2: Have p2p streaming setup and working along with captioning and transcripting (on client side).
+- Mar 16: Facilitate multi-party video streaming using the host servers along with captioning and transcripting(on server side).
+- Mar 23: Produce a finalized system including performance benchmarks, testing, tweaks, ui-polishing, etc.
 
 
 
