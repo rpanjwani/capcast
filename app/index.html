@@ -39,10 +39,21 @@
       </div>
 
       <div class="row marketing">
-        <div class="col-lg-6">
-          <h4></h4>
-          <p></p>
+        <div class="col-sm-12">
+          <form class="form-horizontal" role="form">
+			  <div class="form-group form-group-lg">
+			    <label class="sr-only" for="meeting-name">Meeting Room:</label>
+			    	<div class="col-sm-8">
+			      		<input type="text" class="form-control" id="meeting-name" placeholder="Meeting Room">
+			      	</div>
+			      <button id="setup-meeting" class="btn btn-primary btn-lg col-sm-4">Join</button>
+			  </div>
+			</form>
         </div>
+      </div>
+      <div class="col-sm-12">
+      	<div id="local-streams-container"></div>
+      	<div id="remote-streams-container"></div>
       </div>
 
       <div class="footer">
@@ -82,7 +93,6 @@
         <script src="bower_components/bootstrap/js/collapse.js"></script>
         <script src="bower_components/bootstrap/js/tab.js"></script>
         <!-- endbuild -->
-
         <script src="scripts/meeting.js"></script>
         <!-- build:js({app,.tmp}) scripts/main.js -->
         <script src="scripts/main.js"></script>
