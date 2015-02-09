@@ -5,6 +5,20 @@ var meetingRooms = {};
 meeting.onmeeting = function (room) {
     if (meetingRooms[room.roomid]) return;
     meetingRooms[room.roomid] = room;
+
+    var div = document.createElement('div');
+    div.innerHTML = room.roomid;
+    var button = document.createElement('button');
+    button.innerHTML = 'Join';
+
+    div.insertBefore(button, div.firstChild);
+    meetingsList.insertBefore(div, meetingsList.firstChild);
+
+    button.onclick = function() {
+    	room = meetingRooms[room.roomid];
+    	if(room) meeting.meet(room);
+    	meetingsList.style.display = 'none';
+    }
 };
 
 var remoteMediaStreams = document.getElementById('remote-streams-container');
@@ -12,13 +26,24 @@ var localMediaStream = document.getElementById('local-streams-container');
 
 // on getting media stream
 meeting.onaddstream = function (e) {
+	var captions = document.getElementById('captions');
+	// var recognition = new webkitSpeechRecognition();
+	// recognition.continuous = true;
+	// recognition.interimResults = true;
+	// recognition.lang = "en-CA";
+	// recognition.onresult = function(event) { 
+
+	// 	captions.innerHTML = event.results[0][0].transcript;
+	// }
+	// recognition.start();
     if (e.type == 'local') localMediaStream.appendChild(e.video);
     if (e.type == 'remote') remoteMediaStreams.insertBefore(e.video, remoteMediaStreams.firstChild);
 };
 
 meeting.openSignalingChannel = function(onmessage) {
 	var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
-	var websocket = new WebSocket('wss://wsnodejs.nodejitsu.com:443');
+	//var websocket = new WebSocket('wss://wsnodejs.nodejitsu.com:443');
+	var websocket = new WebSocket('ws://localhost:12034');
 	websocket.onopen = function () {
 		websocket.push(JSON.stringify({
 			open: true,
@@ -57,8 +82,9 @@ meeting.onuserleft = function (userid) {
 meeting.check();
 
 document.getElementById('setup-meeting').onclick = function () {
-    // setup new meeting room
+    
     var meetingRoomName = document.getElementById('meeting-name').value || 'Simple Meeting';
+    // setup new meeting room
     meeting.setup(meetingRoomName);
     
     this.disabled = true;
