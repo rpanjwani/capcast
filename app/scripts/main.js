@@ -40,7 +40,10 @@ meeting.onaddstream = function (e) {
     if (e.type == 'remote') remoteMediaStreams.insertBefore(e.video, remoteMediaStreams.firstChild);
 };
 
-function initWs(websocket, channel, onmessage) {
+meeting.openSignalingChannel = function(onmessage) {
+	var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
+	//var websocket = new WebSocket('wss://wsnodejs.nodejitsu.com:443');
+	var websocket = new WebSocket('ws://52.10.187.205:12034');
 	websocket.onopen = function () {
 		
 		websocket.push(JSON.stringify({
@@ -48,9 +51,68 @@ function initWs(websocket, channel, onmessage) {
 			channel: channel
 		}));
 	};
+
+	websocket.onerror = function(event) {
+		
+		websocket = new WebSocket('ws://52.10.85.220:12034');
+		websocket.onopen = function () {
+			websocket.push(JSON.stringify({
+				open: true,
+				channel: channel
+			}));
+		};
+
+		websocket.onerror = function(event) {
+			
+			websocket = new WebSocket('ws://52.10.60.41:12034');
+			websocket.onopen = function () {
+				websocket.push(JSON.stringify({
+					open: true,
+					channel: channel
+				}));
+			};
+			websocket.push = websocket.send;
+			websocket.send = function (data) {
+
+				if(websocket.readyState != 1) {
+					return setTimeout(function() {
+						websocket.send(data);
+					}, 300);
+				}
+				
+				websocket.push(JSON.stringify({
+					data: data,
+					channel: channel
+				}));
+			};
+			websocket.onmessage = function(e) {
+				onmessage(JSON.parse(e.data));
+			};
+		}
+
+
+		websocket.push = websocket.send;
+		websocket.send = function (data) {
+
+			if(websocket.readyState != 1) {
+				return setTimeout(function() {
+					websocket.send(data);
+				}, 300);
+			}
+			
+			websocket.push(JSON.stringify({
+				data: data,
+				channel: channel
+			}));
+		};
+		websocket.onmessage = function(e) {
+			onmessage(JSON.parse(e.data));
+		};
+	};
+
 	websocket.push = websocket.send;
 	websocket.send = function (data) {
-		console.log(data);
+
 		if(websocket.readyState != 1) {
 			return setTimeout(function() {
 				websocket.send(data);
@@ -65,26 +127,6 @@ function initWs(websocket, channel, onmessage) {
 	websocket.onmessage = function(e) {
 		onmessage(JSON.parse(e.data));
 	};
-}
-
-meeting.openSignalingChannel = function(onmessage) {
-	var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
-	//var websocket = new WebSocket('wss://wsnodejs.nodejitsu.com:443');
-	var websocket = new WebSocket('ws://0.0.0.0:12034');
-	initWs(websocket,channel,onmessage);
-
-	websocket.onerror = function(event) {
-		alert('riz');
-		websocket = new WebSocket('ws://52.10.112.31:12034');
-		initWs(websocket,channel,onmessage);
-	}
-
-	// 	websocket.onerror = function(event) {
-	// 		alert('riz failed');
-	// 		websocket = new WebSocket('ws://52.10.60.41:12034');
-	// 		initWs(websocket,channel,onmessage);
-	// 	}
-	// };
 
 	return websocket;
 };
