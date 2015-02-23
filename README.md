@@ -5,7 +5,7 @@ A video conferencing app that produces speech to text captions in real time. Thi
 Our [wiki](https://github.com/rpanjwani/capcast/wiki/Tools-Instructions) contains instructions on how to get the front-end running on your machine, our coding structure, test cases, etc.
 
 ## Log
-Our [wiki](https://github.com/rpanjwani/capcast/wiki/Logbook) also contains our struggles and endeavours while we build this awesome project.
+Our [wiki](https://github.com/rpanjwani/capcast/wiki/Logbook) also contains updates on our struggles and endeavours while we build this awesome project.
 
 ## Our Website:
 <http://rpanjwani.github.io/capcast>
