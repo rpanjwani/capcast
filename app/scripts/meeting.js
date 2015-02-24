@@ -26,6 +26,7 @@
 
         function initSignaler() {
             signaler = new Signaler(self);
+            self.signaler = signaler;
         }
 
         function captureUserMedia(callback) {
@@ -109,6 +110,7 @@
 
         // it is called when your signaling implementation fires "onmessage"
         this.onmessage = function (message) {
+            signaler.peers = peers;
             // if new room detected
             if (message.roomid && message.broadcasting && !signaler.sentParticipationRequest)
                 root.onmeeting(message);
@@ -171,6 +173,7 @@
             var _options = options;
             _options.to = to;
             _options.stream = root.stream;
+            _options.establishDataChannel = root.establishDataChannel
             peers[to] = Offer.createOffer(_options);
         }
 
@@ -203,6 +206,7 @@
                 _options.stream = root.stream;
                 _options.sdp = sdp;
                 _options.to = message.userid;
+                _options.establishDataChannel = root.establishDataChannel
                 peers[message.userid] = Answer.createAnswer(_options);
             }
 
@@ -454,9 +458,10 @@
     };
 
     var optionalArgument = {
-        optional: [{
-            DtlsSrtpKeyAgreement: true
-        }]
+        optional: [
+            {RtpDataChannels: true},
+            {DtlsSrtpKeyAgreement: true}
+        ]
     };
 
     var offerAnswerConstraints = {
@@ -483,8 +488,10 @@
     var Offer = {
         createOffer: function (config) {
             var peer = new RTCPeerConnection(iceServersObject, optionalArgument);
-
+            var dataChannel = peer.createDataChannel('blah', {reliable:false});
             if (config.stream) peer.addStream(config.stream);
+
+            if(config.establishDataChannel) config.establishDataChannel(dataChannel);
 
             peer.onaddstream = function (event) {
                 config.onaddstream(event.stream, config.to);
@@ -524,8 +531,11 @@
     var Answer = {
         createAnswer: function (config) {
             var peer = new RTCPeerConnection(iceServersObject, optionalArgument);
+            var dataChannel = peer.createDataChannel('blah', {reliable:false});
 
             if (config.stream) peer.addStream(config.stream);
+
+            if(config.establishDataChannel) config.establishDataChannel(dataChannel);
 
             peer.onaddstream = function (event) {
                 config.onaddstream(event.stream, config.to);
