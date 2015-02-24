@@ -10,6 +10,9 @@ Our [wiki](https://github.com/rpanjwani/capcast/wiki/Installation-&-Tools-Instru
 ## Code Structure & Interfaces
 Our [wiki](https://github.com/rpanjwani/capcast/wiki/Code-Structure-&-Interfaces) details the code structure & interface.
 
+## Handling Failures
+Our [wiki](https://github.com/rpanjwani/capcast/wiki/Handling-Failures) talks about how we handle failures in our web app.
+
 ## Log
 Our [wiki](https://github.com/rpanjwani/capcast/wiki/Logbook) contains updates on our struggles and endeavours while we build this awesome project.
 
