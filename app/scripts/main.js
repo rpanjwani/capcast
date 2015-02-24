@@ -1,4 +1,5 @@
 var recognition = new webkitSpeechRecognition();
+var dataChannel;
 recognition.continuous = true;
 recognition.interimResults = true;
 recognition.lang = "en-CA";
@@ -9,8 +10,13 @@ recognition.onresult = function(event) {
         	final_transcript += event.results[i][0].transcript;
      	}
     }
-    if(dataChannel)
+    console.log(final_transcript);
+    document.getElementById('captions').innerHTML += final_transcript;
+
+    if(dataChannel){
+    	console.log('sending caption');
 		dataChannel.send(final_transcript);
+    }
 	// if(meeting && meeting.signaler && meeting.signaler.peers) {
 	// 	console.log("has peers");
 	// 	var peerConnection = peers[0];
@@ -48,14 +54,13 @@ meeting.onmeeting = function (room) {
     }
 };
 
-var dataChannel;
-
-meeting.establishDataChannel = function (dataChannel) {
+meeting.establishDataChannel = function (dataChan) {
 	// var dataChannelOptions = {
 	// 	ordered: false, // do not guarantee order
 	// 	maxRetransmitTime: 3000, // in milliseconds
 	// };
 	//dataChannel = peerConnection.createDataChannel("myChannel", dataChannelOptions);
+	dataChannel = dataChan;
 	dataChannel.onmessage = function (event) {
 		console.log("Got Data Channel Message:", event.data);
 	};
