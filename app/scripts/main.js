@@ -1,3 +1,36 @@
+var recognition = new webkitSpeechRecognition();
+var dataChannel;
+recognition.continuous = true;
+recognition.interimResults = true;
+recognition.lang = "en-CA";
+recognition.onresult = function(event) {
+	var final_transcript = ""
+	for (var i = event.resultIndex; i < event.results.length; ++i) {
+    	if (event.results[i].isFinal) {
+        	final_transcript += event.results[i][0].transcript;
+     	}
+    }
+    console.log(final_transcript);
+    document.getElementById('captions').innerHTML += final_transcript;
+
+    if(dataChannel){
+    	console.log('sending caption');
+		dataChannel.send(final_transcript);
+    }
+	// if(meeting && meeting.signaler && meeting.signaler.peers) {
+	// 	console.log("has peers");
+	// 	var peerConnection = peers[0];
+	// 	var dataChannel = peerConnection.createDataChannel("myChannel", dataChannelOptions);
+	// 	dataChannel.onmessage = function (event) {
+	// 	  console.log("Got Data Channel Message:", event.data);
+	// 	};
+	// 	console.log("sending " + final_transcript);
+	// 	dataChannel.send(final_transcript);
+	// }
+}
+recognition.start();
+
+
 var meeting = new Meeting();
 
 var meetingsList = document.getElementById('meetings-list');
@@ -21,21 +54,36 @@ meeting.onmeeting = function (room) {
     }
 };
 
+meeting.establishDataChannel = function (dataChan) {
+	// var dataChannelOptions = {
+	// 	ordered: false, // do not guarantee order
+	// 	maxRetransmitTime: 3000, // in milliseconds
+	// };
+	//dataChannel = peerConnection.createDataChannel("myChannel", dataChannelOptions);
+	dataChannel = dataChan;
+	dataChannel.onmessage = function (event) {
+		console.log("Got Data Channel Message:", event.data);
+	};
+
+    dataChannel.onopen = function () {
+    	dataChannel.send('first text message over RTP data ports');
+    };
+
+    dataChannel.onclose = function (e) {
+        console.error(e);
+    };
+
+    dataChannel.onerror = function (e) {
+        console.error(e);
+    };
+}
+
 var remoteMediaStreams = document.getElementById('remote-streams-container');
 var localMediaStream = document.getElementById('local-streams-container');
 
 // on getting media stream
 meeting.onaddstream = function (e) {
 	var captions = document.getElementById('captions');
-	// var recognition = new webkitSpeechRecognition();
-	// recognition.continuous = true;
-	// recognition.interimResults = true;
-	// recognition.lang = "en-CA";
-	// recognition.onresult = function(event) { 
-
-	// 	captions.innerHTML = event.results[0][0].transcript;
-	// }
-	// recognition.start();
     if (e.type == 'local') localMediaStream.appendChild(e.video);
     if (e.type == 'remote') remoteMediaStreams.insertBefore(e.video, remoteMediaStreams.firstChild);
 };
@@ -70,7 +118,7 @@ function initWs(websocket, channel, onmessage) {
 meeting.openSignalingChannel = function(onmessage) {
 	var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
 	//var websocket = new WebSocket('wss://wsnodejs.nodejitsu.com:443');
-	var websocket = new WebSocket('ws://0.0.0.0:12034');
+	var websocket = new WebSocket('ws://52.10.201.60:12034');
 	initWs(websocket,channel,onmessage);
 
 	websocket.onerror = function(event) {
