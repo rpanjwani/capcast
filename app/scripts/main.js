@@ -38,12 +38,13 @@ meeting.onaddstream = function (e) {
 	// recognition.start();
     if (e.type == 'local') localMediaStream.appendChild(e.video);
     if (e.type == 'remote') remoteMediaStreams.insertBefore(e.video, remoteMediaStreams.firstChild);
-};
+    
+    };
 
 meeting.openSignalingChannel = function(onmessage) {
 	var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
 	//var websocket = new WebSocket('wss://wsnodejs.nodejitsu.com:443');
-	var websocket = new WebSocket('ws://localhost:12034');
+	var websocket = new WebSocket( 'ws://127.0.0.1:12034');
 	websocket.onopen = function () {
 		websocket.push(JSON.stringify({
 			open: true,

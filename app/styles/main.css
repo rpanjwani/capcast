@@ -53,10 +53,25 @@ body {
   font-size: 21px;
   padding: 14px 24px;
 }
+#self{
+  height:250px;
+  width:250px;
+}
+#remote-streams-container
+{
+  height:250px;
+  width:250px;
+
+}
+#chat-box
+{
+  height: 250px;
+  width:250px;
+}
 
 /* Supporting marketing content */
 .marketing {
-  margin: 40px 0;
+  margin: 5px 0;
 }
 
 .marketing p + h4 {
