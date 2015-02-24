@@ -9,7 +9,8 @@ recognition.onresult = function(event) {
         	final_transcript += event.results[i][0].transcript;
      	}
     }
-	console.log(final_transcript);
+    if(dataChannel)
+		dataChannel.send(final_transcript);
 	// if(meeting && meeting.signaler && meeting.signaler.peers) {
 	// 	console.log("has peers");
 	// 	var peerConnection = peers[0];
@@ -50,13 +51,6 @@ meeting.onmeeting = function (room) {
 var dataChannel;
 
 meeting.establishDataChannel = function (dataChannel) {
-	alert("established data channel");
-
-	var button = document.getElementById('sendData');
-	button.onclick = function() {
-		dataChannel.send("sending a dummy message.");
-	}
-
 	// var dataChannelOptions = {
 	// 	ordered: false, // do not guarantee order
 	// 	maxRetransmitTime: 3000, // in milliseconds
