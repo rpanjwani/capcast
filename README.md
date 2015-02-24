@@ -7,6 +7,9 @@ Our [Wiki](https://github.com/rpanjwani/capcast/wiki/Simple-Walkthrough) contain
 ## Installation Instructions
 Our [wiki](https://github.com/rpanjwani/capcast/wiki/Installation-&-Tools-Instructions) contains instructions on how to get the front-end running on your machine, our coding structure, test cases, etc.
 
+## Code Structure & Interfaces
+Our [wiki](https://github.com/rpanjwani/capcast/wiki/Code-Structure-&-Interfaces) details the code structure & interface.
+
 ## Log
 Our [wiki](https://github.com/rpanjwani/capcast/wiki/Logbook) contains updates on our struggles and endeavours while we build this awesome project.
 
