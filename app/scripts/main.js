@@ -123,16 +123,15 @@ meeting.openSignalingChannel = function(onmessage) {
 
 	websocket.onerror = function(event) {
 		alert('riz');
-		websocket = new WebSocket('ws://52.10.112.31:12034');
+		websocket = new WebSocket('ws://52.10.195.208:12034');
 		initWs(websocket,channel,onmessage);
-	}
 
-	// 	websocket.onerror = function(event) {
-	// 		alert('riz failed');
-	// 		websocket = new WebSocket('ws://52.10.60.41:12034');
-	// 		initWs(websocket,channel,onmessage);
-	// 	}
-	// };
+		websocket.onerror = function(event) {
+			alert('riz failed');
+			websocket = new WebSocket('ws://52.10.238.25:12034');
+			initWs(websocket,channel,onmessage);
+		};
+	};
 
 	return websocket;
 };
