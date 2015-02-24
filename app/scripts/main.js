@@ -10,9 +10,7 @@ recognition.onresult = function(event) {
         	final_transcript += event.results[i][0].transcript;
      	}
     }
-    console.log(final_transcript);
-    document.getElementById('captions').innerHTML += final_transcript;
-
+   
     if(dataChannel){
     	console.log('sending caption');
 		dataChannel.send(final_transcript);
@@ -63,6 +61,8 @@ meeting.establishDataChannel = function (dataChan) {
 	dataChannel = dataChan;
 	dataChannel.onmessage = function (event) {
 		console.log("Got Data Channel Message:", event.data);
+		 document.getElementById('captions').innerHTML += event.data;
+
 	};
 
     dataChannel.onopen = function () {
