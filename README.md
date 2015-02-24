@@ -2,13 +2,19 @@
 A video conferencing app that produces speech to text captions in real time. This project will comprise of combined project work for Csc 462/562, Csc 466/566, and Csc 461/561.
 
 ## How to use
-Our [Wiki](https://github.com/rpanjwani/capcast/wiki/Simple-Walkthrough) contains a simple walkthrough for our webapp.
+Our [wiki](https://github.com/rpanjwani/capcast/wiki/Simple-Walkthrough) contains a simple walkthrough for our webapp.
 
 ## Installation Instructions
 Our [wiki](https://github.com/rpanjwani/capcast/wiki/Installation-&-Tools-Instructions) contains instructions on how to get the front-end running on your machine, our coding structure, test cases, etc.
 
 ## Code Structure & Interfaces
 Our [wiki](https://github.com/rpanjwani/capcast/wiki/Code-Structure-&-Interfaces) details the code structure & interface.
+
+## Handling Failures
+Our [wiki](https://github.com/rpanjwani/capcast/wiki/Handling-Failures) talks about how we handle failures in our web app.
+
+## Test Cases
+Our [wiki](https://github.com/rpanjwani/capcast/wiki/Test-cases) details the test cases we tried.
 
 ## Log
 Our [wiki](https://github.com/rpanjwani/capcast/wiki/Logbook) contains updates on our struggles and endeavours while we build this awesome project.
