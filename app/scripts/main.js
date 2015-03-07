@@ -1,8 +1,9 @@
-var recognition = new webkitSpeechRecognition();
+window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+var recognition = new SpeechRecognition();
 var dataChannel;
 recognition.continuous = true;
 recognition.interimResults = true;
-recognition.lang = "en-CA";
+recognition.lang = "en-US";
 recognition.onresult = function(event) {
 	var final_transcript = ""
 	for (var i = event.resultIndex; i < event.results.length; ++i) {
@@ -118,7 +119,10 @@ function initWs(websocket, channel, onmessage) {
 meeting.openSignalingChannel = function(onmessage) {
 	var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
 	//var websocket = new WebSocket('wss://wsnodejs.nodejitsu.com:443');
-	var websocket = new WebSocket('ws://52.10.201.60:12034');
+	//The DNS of the load balancer
+	//TODO: Remove the error conditions since the load balancer will take care of EC2 failures
+	//Need to make Load balancer fault tolerant as well
+	var websocket = new WebSocket('ws://capcastt-243336480.us-west-2.elb.amazonaws.com:12034');
 	initWs(websocket,channel,onmessage);
 
 	websocket.onerror = function(event) {
