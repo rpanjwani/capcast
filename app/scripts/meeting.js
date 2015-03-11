@@ -25,6 +25,7 @@
         };
 
         function initSignaler() {
+            console.log('initing signaler');
             signaler = new Signaler(self);
             self.signaler = signaler;
         }
@@ -87,6 +88,10 @@
                     roomid: room.roomid
                 });
             });
+        };
+
+        this.getSignaler = function() {
+            return this.signaler;
         };
 
         // check pre-created meeting rooms
@@ -345,6 +350,11 @@
 
         var socket;
 
+        //allow the user to call this to change the socket
+        this.setSocket = function(websocket) {
+            socket = websocket;
+        };
+
         // signaling implementation
         // if no custom signaling channel is provided; use Firebase
         if (!root.openSignalingChannel) {
@@ -376,7 +386,7 @@
         } else {
             // custom signaling implementations
             // e.g. WebSocket, Socket.io, SignalR, WebSycn, XMLHttpRequest, Long-Polling etc.
-            socket = root.openSignalingChannel(function (message) {
+            root.openSignalingChannel(function (message) {
                 message = JSON.parse(message);
                 if (message.userid != userid) {
                     if (!message.leaving) signaler.onmessage(message);
