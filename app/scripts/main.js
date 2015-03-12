@@ -38,17 +38,22 @@ meeting.onmeeting = function (room) {
     meetingRooms[room.roomid] = room;
 
     var div = document.createElement('div');
-    div.innerHTML = room.roomid;
+    var span = document.createElement('span');
+    span.innerHTML = room.roomid;
+    span.className="room-name";
     var button = document.createElement('button');
+    button.className = "btn-secondary btn btn-md";
     button.innerHTML = 'Join';
 
-    div.insertBefore(button, div.firstChild);
+    div.appendChild(span);
+    div.appendChild(button);
     meetingsList.insertBefore(div, meetingsList.firstChild);
 
     button.onclick = function() {
     	room = meetingRooms[room.roomid];
     	if(room) meeting.meet(room);
     	meetingsList.style.display = 'none';
+    	videos.style.visibility = 'visible';
     }
 };
 
@@ -156,4 +161,5 @@ document.getElementById('setup-meeting').onclick = function () {
     
     this.disabled = true;
     this.parentNode.innerHTML = '<h3><a href="' + location.href + '" target="_blank">Share this link</a></h3>';
+    document.getElementById('videos').style.visibility = "visible";
 };

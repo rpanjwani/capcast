@@ -90,9 +90,9 @@ textarea.form-control
 video
 {
   border: solid;
-  width: 350px;
+  width: 260px;
   border-width: thick;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
@@ -116,5 +116,18 @@ video
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+  }
+
+  .btn-secondary {
+    background-color: rgb(115, 170, 216);
+    font-weight: bold;
+    color: white;
+    margin-left: 20px;
+    width:120px;
+  }
+
+  .room-name {
+    font-size:20px;
+    font-weight:bold;
   }
 }
