@@ -1,111 +1,112 @@
-<!doctype html>
-<html class="no-js">
-  <head>
-    <meta charset="utf-8">
-    <title>capcast</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
-  </head>
-  <body>
-    <!--[if lt IE 10]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+  <!doctype html>
+  <html class="no-js">
+    <head>
+      <meta charset="utf-8">
+      <title>capcast</title>
+      <meta name="description">
+      <meta name="viewport" content="width=device-width">
+      <link rel="shortcut icon" href="/favicon.ico">
+      <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+      <!-- build:css(.) styles/vendor.css -->
+      <!-- bower:css -->
+      <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+      <!-- endbower -->
+      <!-- endbuild -->
+      <!-- build:css(.tmp) styles/main.css -->
+      <link rel="stylesheet" href="styles/main.css">
+      <!-- endbuild -->
+    </head>
+    <body>
+      <div class ="row">
+        <div class = "dummy col-sm-2"></div>
+        <div class = "container col-sm-8">
+          <div class = "header">
+               <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-sm-2">
+                        <h3 class="text-muted">capCast</h3>
+                    </div>
+                    <div class="col-sm-10 col-md-10 col-lg-10">
+                        <ul class="nav nav-pills pull-right">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    </div>
+                    </div>
+                </div>  
 
+            <div class="row marketing">
+                    <form class="form-horizontal" role="form">
+                     <div class="form-group form-group-lg">
+                        <label class="sr-only" for="meeting-name">Meeting Room</label>
+                        <div class="col-sm-8 col-md-8 col-lg-8 ">
+                          <input type="text" class="form-control" id="meeting-name" placeholder="Meeting Room">
+                        </div>
+                        <div class="col-sm-4 col-lg-4 col-md-4">
+                            <button id="setup-meeting" class="btn btn-primary btn-lg col-sm-12 col-lg-12 col-md-12">Join</button>
+                        </div>
+                      </div>
+                    </form>
+            </div>
 
-    <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted">capCast</h3>
-      </div>
-
-<!--       <div class="jumbotron">
-        <h1>'Allo, 'Allo!</h1>
-        <p class="lead">Demo'ing now, eh!</p>
-        <p><a class="btn btn-lg btn-success" href="#">Splendid! <span class="glyphicon glyphicon-ok"></span></a></p>
-      </div> -->
-
-      <div class="row marketing">
-        <div class="col-sm-12">
-          <form class="form-horizontal" role="form">
-			  <div class="form-group form-group-lg">
-			    <label class="sr-only" for="meeting-name">Meeting Room:</label>
-			    	<div class="col-sm-8">
-			      		<input type="text" class="form-control" id="meeting-name" placeholder="Meeting Room">
-			      	</div>
-			      <button id="setup-meeting" class="btn btn-primary btn-lg col-sm-4">Join</button>
-			  </div>
-			</form>
-        </div>
-      </div>
-      <div class="row">
-	      <div class="col-sm-12">
-	      	<div id="local-streams-container"></div>
-	      	<div id="remote-streams-container"></div>
-	      </div>
-	  </div>
-	  <div class="row"><label class="sr-only" for="meeting-name">Speech to text captions received from peers:</label>
-      	<div id="captions" class="col-sm-12">
-      	</div>
-      </div>
-      <div class="row">
-	    <div id="meetings-list" class="col-sm-12">
-	    </div>
-      </div>
-
-      <div class="footer">
+             <div class="row">
+                  <div class="col-sm-12 col-lg-12 col-md-12">
+                      <div class="col-sm-6 col-lg-6 col-md-6" id="local-streams-container"></div>
+                      <div class="col-sm-6 col-lg-6 col-md-6"id="remote-streams-container"></div>
+                  </div>
+            </div>
+            <div class="row">
+                <div id="meetings-list" class="col-sm-12"></div>
+            </div>
+      </div>  
+        <div class = "chat-box col-sm-2">
+            <textarea class="form-control captions jumbotron" for="meeting-name" rows="3">Speech to text captions received from peers:</textarea>
+        </div> 
+      </div>  
+      <div>
+       <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+       <div class="footer">
         <p><span class="glyphicon glyphicon-heart"></span> capCast</p>
+</div>
       </div>
+</div>
+    <!-- build:js(.) scripts/vendor.js --
+      <!-- bower:js -->
+      <script src="bower_components/jquery/dist/jquery.js"></script>
+      <!-- endbower -->
+      <!-- endbuild -->
 
-    </div>
 
+      <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+      <script>
+        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+        e.src='//www.google-analytics.com/analytics.js';
+        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+        ga('create','UA-XXXXX-X');ga('send','pageview');
+      </script>
 
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='//www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
-    </script>
-
-        <!-- build:js(.) scripts/plugins.js -->
-        <script src="bower_components/bootstrap/js/affix.js"></script>
-        <script src="bower_components/bootstrap/js/alert.js"></script>
-        <script src="bower_components/bootstrap/js/dropdown.js"></script>
-        <script src="bower_components/bootstrap/js/tooltip.js"></script>
-        <script src="bower_components/bootstrap/js/modal.js"></script>
-        <script src="bower_components/bootstrap/js/transition.js"></script>
-        <script src="bower_components/bootstrap/js/button.js"></script>
-        <script src="bower_components/bootstrap/js/popover.js"></script>
-        <script src="bower_components/bootstrap/js/carousel.js"></script>
-        <script src="bower_components/bootstrap/js/scrollspy.js"></script>
-        <script src="bower_components/bootstrap/js/collapse.js"></script>
-        <script src="bower_components/bootstrap/js/tab.js"></script>
-        <!-- endbuild -->
-        <script src="scripts/meeting.js"></script>
-        <!-- build:js({app,.tmp}) scripts/main.js -->
-        <script src="scripts/main.js"></script>
-        <!-- endbuild -->
-</body>
-</html>
+          <!-- build:js(.) scripts/plugins.js -->
+          <script src="bower_components/bootstrap/js/affix.js"></script>
+          <script src="bower_components/bootstrap/js/alert.js"></script>
+          <script src="bower_components/bootstrap/js/dropdown.js"></script>
+          <script src="bower_components/bootstrap/js/tooltip.js"></script>
+          <script src="bower_components/bootstrap/js/modal.js"></script>
+          <script src="bower_components/bootstrap/js/transition.js"></script>
+          <script src="bower_components/bootstrap/js/button.js"></script>
+          <script src="bower_components/bootstrap/js/popover.js"></script>
+          <script src="bower_components/bootstrap/js/carousel.js"></script>
+          <script src="bower_components/bootstrap/js/scrollspy.js"></script>
+          <script src="bower_components/bootstrap/js/collapse.js"></script>
+          <script src="bower_components/bootstrap/js/tab.js"></script>
+          <!-- endbuild -->
+          <script src="scripts/meeting.js"></script>
+          <!-- build:js({app,.tmp}) scripts/main.js -->
+          <script src="scripts/main.js"></script>
+          <!-- endbuild -->
+            </body>
+    </html>

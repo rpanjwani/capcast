@@ -118,7 +118,7 @@ function initWs(websocket, channel, onmessage) {
 meeting.openSignalingChannel = function(onmessage) {
 	var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
 	//var websocket = new WebSocket('wss://wsnodejs.nodejitsu.com:443');
-	var websocket = new WebSocket('ws://52.10.201.60:12034');
+	var websocket = new WebSocket('ws://52.11.178.4:12034');
 	initWs(websocket,channel,onmessage);
 
 	websocket.onerror = function(event) {
@@ -155,5 +155,5 @@ document.getElementById('setup-meeting').onclick = function () {
     meeting.setup(meetingRoomName);
     
     this.disabled = true;
-    this.parentNode.innerHTML = '<h2><a href="' + location.href + '" target="_blank">Share this link</a></h2>';
+    this.parentNode.innerHTML = '<h3><a href="' + location.href + '" target="_blank">Share this link</a></h3>';
 };
