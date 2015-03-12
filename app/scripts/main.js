@@ -2,17 +2,20 @@ var recognition = new webkitSpeechRecognition();
 var dataChannel;
 recognition.continuous = true;
 recognition.interimResults = true;
-recognition.lang = "en-CA";
+recognition.lang = "en-US";
 recognition.onresult = function(event) {
+	alert("recognize");
 	var final_transcript = ""
 	for (var i = event.resultIndex; i < event.results.length; ++i) {
     	if (event.results[i].isFinal) {
         	final_transcript += event.results[i][0].transcript;
      	}
     }
+
+    console.log("recognized " + final_transcript);
    
     if(dataChannel){
-    	console.log('sending caption');
+    	console.log("sending data channel message" + final_transcript);
 		dataChannel.send(final_transcript);
     }
 	// if(meeting && meeting.signaler && meeting.signaler.peers) {
@@ -88,19 +91,23 @@ var localMediaStream = document.getElementById('local-streams-container');
 
 // on getting media stream
 meeting.onaddstream = function (e) {
-	var captions = document.getElementById('captions');
     if (e.type == 'local') localMediaStream.appendChild(e.video);
     if (e.type == 'remote') remoteMediaStreams.insertBefore(e.video, remoteMediaStreams.firstChild);
 };
 
-function initWs(websocket, channel, onmessage) {
+
+var websockets = ['ws://127.0.0.1:12034','ws://127.0.0.1:12035','ws://127.0.0.1:12036'];
+var currentSocket=0;
+
+function initWs(channel, onmessage) {
+	var websocket = new WebSocket(websockets[currentSocket]);
 	websocket.onopen = function () {
-		
 		websocket.push(JSON.stringify({
 			open: true,
 			channel: channel
 		}));
 	};
+
 	websocket.push = websocket.send;
 	websocket.send = function (data) {
 		console.log(data);
@@ -115,30 +122,57 @@ function initWs(websocket, channel, onmessage) {
 			channel: channel
 		}));
 	};
+
 	websocket.onmessage = function(e) {
 		onmessage(JSON.parse(e.data));
 	};
+
+	websocket.onclose = function(e) {
+		var nextSocket = (currentSocket + 1) % websockets.length;
+		console.log(websockets[currentSocket] + "closed. Connecting to " + websockets[nextSocket]);
+		currentSocket = nextSocket;
+		initWs(channel, onmessage);
+	};
+
+	websocket.onerror = function(e) {
+		console.log("error on socket " + websockets[currentSocket] + ". Closing the socket.");
+		websocket.close();
+	};
+
+	if(meeting.getSignaler())
+		meeting.getSignaler().setSocket(websocket);
 }
 
 meeting.openSignalingChannel = function(onmessage) {
 	var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
+	initWs(channel, onmessage);
 	//var websocket = new WebSocket('wss://wsnodejs.nodejitsu.com:443');
-	var websocket = new WebSocket('ws://127.0.0.1:12034');
-	initWs(websocket,channel,onmessage);
+	// websocket = new WebSocket('ws://127.0.0.1:12034');
+	// initWs(websocket,channel,onmessage);
 
-	websocket.onerror = function(event) {
-		alert('riz');
-		websocket = new WebSocket('ws://52.10.195.208:12034');
-		initWs(websocket,channel,onmessage);
+	// websocket.onerror = function(event) {
+	// 	console.log("closing websocket 1");
+	// 	websocket.close();
+	// 	alert('trying second server');
+	// 	websocket = new WebSocket('ws://127.0.0.1:12035');
+	// 	initWs(this,channel,onmessage);
 
-		websocket.onerror = function(event) {
-			alert('riz failed');
-			websocket = new WebSocket('ws://52.10.238.25:12034');
-			initWs(websocket,channel,onmessage);
-		};
-	};
+	// 	websocket.onerror = function(event) {
+	// 		console.log("closing websocket 2");
+	// 		websocket.close();
+	// 		alert('trying third server');
+	// 		websocket = new WebSocket('ws://127.0.0.1:12036');
+	// 		initWs(websocket,channel,onmessage);
 
-	return websocket;
+	// 			websocket.onerror = function(event) {
+	// 			console.log("closing websocket 3");
+	// 			websocket.close();
+	// 			alert('cycling through...');
+	// 			meeting.openSignalingChannel(onmessage, websocket);
+	// 		};
+	// 	};
+	// };
+	// return websocket;
 };
 
 // using firebase for signaling
