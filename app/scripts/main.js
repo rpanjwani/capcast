@@ -10,20 +10,13 @@ recognition.onresult = function(event) {
         	final_transcript += event.results[i][0].transcript;
      	}
     }
+
+    console.log("recognized " + final_transcript);
    
     if(dataChannel){
+    	console.log("sending data channel message" + final_transcript);
 		dataChannel.send(final_transcript);
     }
-	// if(meeting && meeting.signaler && meeting.signaler.peers) {
-	// 	console.log("has peers");
-	// 	var peerConnection = peers[0];
-	// 	var dataChannel = peerConnection.createDataChannel("myChannel", dataChannelOptions);
-	// 	dataChannel.onmessage = function (event) {
-	// 	  console.log("Got Data Channel Message:", event.data);
-	// 	};
-	// 	console.log("sending " + final_transcript);
-	// 	dataChannel.send(final_transcript);
-	// }
 }
 recognition.start();
 
@@ -37,17 +30,22 @@ meeting.onmeeting = function (room) {
     meetingRooms[room.roomid] = room;
 
     var div = document.createElement('div');
-    div.innerHTML = room.roomid;
+    var span = document.createElement('span');
+    span.innerHTML = room.roomid;
+    span.className="room-name";
     var button = document.createElement('button');
+    button.className = "btn-secondary btn btn-md";
     button.innerHTML = 'Join';
 
-    div.insertBefore(button, div.firstChild);
+    div.appendChild(span);
+    div.appendChild(button);
     meetingsList.insertBefore(div, meetingsList.firstChild);
 
     button.onclick = function() {
     	room = meetingRooms[room.roomid];
     	if(room) meeting.meet(room);
     	meetingsList.style.display = 'none';
+    	videos.style.visibility = 'visible';
     }
 };
 
@@ -60,12 +58,12 @@ meeting.establishDataChannel = function (dataChan) {
 	dataChannel = dataChan;
 	dataChannel.onmessage = function (event) {
 		console.log("Got Data Channel Message:", event.data);
-		 document.getElementById('captions').innerHTML += event.data;
+		 document.getElementById('captions').value += event.data;
 
 	};
 
     dataChannel.onopen = function () {
-    	dataChannel.send('first text message over RTP data ports');
+    	//dataChannel.send('first text message over RTP data ports');
     };
 
     dataChannel.onclose = function (e) {
@@ -82,7 +80,6 @@ var localMediaStream = document.getElementById('local-streams-container');
 
 // on getting media stream
 meeting.onaddstream = function (e) {
-	var captions = document.getElementById('captions');
     if (e.type == 'local') localMediaStream.appendChild(e.video);
     if (e.type == 'remote') remoteMediaStreams.insertBefore(e.video, remoteMediaStreams.firstChild);
 };
@@ -102,7 +99,7 @@ function initWs(channel, onmessage) {
 
 	websocket.push = websocket.send;
 	websocket.send = function (data) {
-		console.log(data);
+		//console.log(data);
 		if(websocket.readyState != 1) {
 			return setTimeout(function() {
 				websocket.send(data);
@@ -137,35 +134,7 @@ function initWs(channel, onmessage) {
 
 meeting.openSignalingChannel = function(onmessage) {
 	var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
-
 	initWs(channel, onmessage);
-	//var websocket = new WebSocket('wss://wsnodejs.nodejitsu.com:443');
-	// websocket = new WebSocket('ws://127.0.0.1:12034');
-	// initWs(websocket,channel,onmessage);
-
-	// websocket.onerror = function(event) {
-	// 	console.log("closing websocket 1");
-	// 	websocket.close();
-	// 	alert('trying second server');
-	// 	websocket = new WebSocket('ws://127.0.0.1:12035');
-	// 	initWs(this,channel,onmessage);
-
-	// 	websocket.onerror = function(event) {
-	// 		console.log("closing websocket 2");
-	// 		websocket.close();
-	// 		alert('trying third server');
-	// 		websocket = new WebSocket('ws://127.0.0.1:12036');
-	// 		initWs(websocket,channel,onmessage);
-
-	// 			websocket.onerror = function(event) {
-	// 			console.log("closing websocket 3");
-	// 			websocket.close();
-	// 			alert('cycling through...');
-	// 			meeting.openSignalingChannel(onmessage, websocket);
-	// 		};
-	// 	};
-	// };
-	// return websocket;
 };
 
 // using firebase for signaling
@@ -187,5 +156,6 @@ document.getElementById('setup-meeting').onclick = function () {
     meeting.setup(meetingRoomName);
     
     this.disabled = true;
-    this.parentNode.innerHTML = '<h2><a href="' + location.href + '" target="_blank">Share this link</a></h2>';
+    this.parentNode.innerHTML = '<h3><a href="' + location.href + '" target="_blank">Share this link</a></h3>';
+    document.getElementById('videos').style.visibility = "visible";
 };

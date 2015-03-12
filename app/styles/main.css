@@ -1,3 +1,10 @@
+body{ 
+  background: url(/background.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -17,6 +24,24 @@ body {
 .footer {
   padding-left: 15px;
   padding-right: 15px;
+}
+
+/*Styling for the textbox area */
+.captions{
+  position:relative;
+   border-style: solid;
+  border-radius: 5px;
+  border-color:#000000;
+}
+
+.chat-box{
+  margin-top: 200px;
+  height: 400px;
+  margin-left: 20px;
+}
+textarea.form-control 
+{
+  height: 300px;
 }
 
 /* Custom page header */
@@ -62,11 +87,17 @@ body {
 .marketing p + h4 {
   margin-top: 28px;
 }
-
+video
+{
+  border: solid;
+  width: 260px;
+  border-width: thick;
+  border-radius: 5px;
+}
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
-    max-width: 730px;
+    max-width: 830px;
   }
 
   /* Remove the padding we set earlier */
@@ -85,5 +116,18 @@ body {
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+  }
+
+  .btn-secondary {
+    background-color: rgb(115, 170, 216);
+    font-weight: bold;
+    color: white;
+    margin-left: 20px;
+    width:120px;
+  }
+
+  .room-name {
+    font-size:20px;
+    font-weight:bold;
   }
 }
