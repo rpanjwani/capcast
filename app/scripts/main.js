@@ -61,7 +61,7 @@ meeting.establishDataChannel = function (dataChan) {
 	dataChannel = dataChan;
 	dataChannel.onmessage = function (event) {
 		console.log("Got Data Channel Message:", event.data);
-		 document.getElementById('captions').innerHTML += event.data;
+		 document.getElementById('captions').value += event.data;
 
 	};
 
@@ -118,7 +118,7 @@ function initWs(websocket, channel, onmessage) {
 meeting.openSignalingChannel = function(onmessage) {
 	var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
 	//var websocket = new WebSocket('wss://wsnodejs.nodejitsu.com:443');
-	var websocket = new WebSocket('ws://52.11.178.4:12034');
+	var websocket = new WebSocket('ws://127.0.0.1:12034');
 	initWs(websocket,channel,onmessage);
 
 	websocket.onerror = function(event) {
