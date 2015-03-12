@@ -124,7 +124,7 @@
             // for pretty logging
                 console.debug(JSON.stringify(message, function (key, value) {
                 if (value && value.sdp) {
-                    console.log(value.sdp.type, '---', value.sdp.sdp);
+                    //console.log(value.sdp.type, '---', value.sdp.sdp);
                     return '';
                 } else return value;
             }, '---'));
