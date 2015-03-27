@@ -58,7 +58,7 @@ meeting.establishDataChannel = function (dataChan) {
 	dataChannel = dataChan;
 	dataChannel.onmessage = function (event) {
 		console.log("Got Data Channel Message:", event.data);
-		 document.getElementById('captions').value += event.data;
+		 document.getElementById('captions').innerHTML += "\n<span class='user-id'>" + meeting.getSignaler().userid + "</span>: " + event.data;
 
 	};
 
@@ -84,13 +84,15 @@ meeting.onaddstream = function (e) {
     if (e.type == 'remote') remoteMediaStreams.insertBefore(e.video, remoteMediaStreams.firstChild);
 };
 
-
-var websockets = ['ws://127.0.0.1:12034','ws://127.0.0.1:12035','ws://127.0.0.1:12036'];
+//for some reason, we need to fail for the first socket otherwise it doesn't work! hence using 0.0.0.0.
+var websockets = ['ws://0.0.0.0','ws://54.148.27.246:12034','ws://54.69.7.201:12034','ws://52.10.3.42:12034','ws://52.11.240.209:12034'];
 var currentSocket=0;
 
 function initWs(channel, onmessage) {
 	var websocket = new WebSocket(websockets[currentSocket]);
+	console.log("connecting to " + websockets[currentSocket]);
 	websocket.onopen = function () {
+		console.log("opening " + websockets[currentSocket]);
 		websocket.push(JSON.stringify({
 			open: true,
 			channel: channel

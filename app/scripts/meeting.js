@@ -107,6 +107,8 @@
         // self instance
         var signaler = this;
 
+        signaler.userid = userid;
+
         // object to store all connected peers
         var peers = {};
 
@@ -499,6 +501,7 @@
         createOffer: function (config) {
             var peer = new RTCPeerConnection(iceServersObject, optionalArgument);
             var dataChannel = peer.createDataChannel('blah', {reliable:false});
+            console.log("creating data channel offer");
             if (config.stream) peer.addStream(config.stream);
 
             if(config.establishDataChannel) config.establishDataChannel(dataChannel);
@@ -542,7 +545,7 @@
         createAnswer: function (config) {
             var peer = new RTCPeerConnection(iceServersObject, optionalArgument);
             var dataChannel = peer.createDataChannel('blah', {reliable:false});
-
+            console.log("creating data channel answer");
             if (config.stream) peer.addStream(config.stream);
 
             if(config.establishDataChannel) config.establishDataChannel(dataChannel);
