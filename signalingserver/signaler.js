@@ -55,7 +55,7 @@ function onMessage(message, websocket) {
     else if (message.open)
         onOpen(message, websocket);
     else
-        sendMessage(message, websocket);
+        sendMessage(message, websocket, false);
 }
 
 function onOpen(message, websocket) {
@@ -65,13 +65,18 @@ function onOpen(message, websocket) {
         CHANNELS[message.channel][channel.length] = websocket;
     else
         CHANNELS[message.channel] = [websocket];
+    message.data = {};
+    message.data.publicIp = publicIp;
+    sendMessage(message, websocket, true);
 }
 
-function sendMessage(message, websocket) {
+function sendMessage(message, websocket, selfMessage) {
+    console.log(JSON.stringify(selfMessage));
     message.data = JSON.stringify(message.data);
-    message.data = JSON.parse(JSON.parse(message.data ));
-    message.data.publicIp = publicIp;
-    message.data = JSON.stringify(JSON.stringify(message.data));
+    if(selfMessage) {
+	message.data = JSON.stringify(message.data);
+    }
+
     var channel = CHANNELS[message.channel];
     if (!channel) {
         console.error('no such channel exists');
@@ -79,7 +84,7 @@ function sendMessage(message, websocket) {
     }
 
     for (var i = 0; i < channel.length; i++) {
-        if (channel[i] /*&& channel[i] != websocket*/) {
+        if (channel[i] && (selfMessage || channel[i] != websocket)) {
             try {
                 channel[i].sendUTF(message.data);
             } catch(e) {
