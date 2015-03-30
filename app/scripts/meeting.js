@@ -119,8 +119,11 @@
         this.onmessage = function (message) {
             signaler.peers = peers;
             // if new room detected
-            if (message.roomid && message.broadcasting && !signaler.sentParticipationRequest)
+            console.log(message);
+            if (message.roomid && message.broadcasting && !signaler.sentParticipationRequest) {
+
                 root.onmeeting(message);
+            }
 
             else
             // for pretty logging

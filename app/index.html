@@ -41,11 +41,17 @@
               <form class="form-horizontal" role="form">
                <div class="form-group form-group-lg">
                   <label class="sr-only" for="meeting-name">Meeting Room</label>
-                  <div class="col-sm-8 col-md-8 col-lg-8 ">
+                 <!--  <div class="col-sm-8 col-md-8 col-lg-8 ">
                     <input type="text" class="form-control" id="meeting-name" placeholder="Meeting Room">
                   </div>
                   <div class="col-sm-4 col-lg-4 col-md-4">
-                      <button id="setup-meeting" class="btn btn-primary btn-lg col-sm-12 col-lg-12 col-md-12">Join</button>
+                    <button id="setup-meeting" class="btn btn-primary btn-lg col-sm-12 col-lg-12 col-md-12">Join</button>
+                  </div> -->
+                  <div class="col-md-12" id="room-div" style="visibility:hidden;">
+                    <h4>Your room is ready. Share the room link below with the participants.</h4>
+                    <div class="col-md-12">
+                      <h5 id="room-link"></h5>
+                    </div>
                   </div>
                 </div>
               </form>
@@ -75,7 +81,7 @@
 </div>
       </div>
 </div>
-    <!-- build:js(.) scripts/vendor.js --
+    <!-- build:js(.) scripts/vendor.js -->
       <!-- bower:js -->
       <script src="bower_components/jquery/dist/jquery.js"></script>
       <!-- endbower -->
@@ -106,7 +112,9 @@
           <script src="bower_components/bootstrap/js/collapse.js"></script>
           <script src="bower_components/bootstrap/js/tab.js"></script>
           <!-- endbuild -->
+          <!-- build:js({app,.tmp}) scripts/meeting.js -->
           <script src="scripts/meeting.js"></script>
+          <!-- endbuild -->
           <!-- build:js({app,.tmp}) scripts/main.js -->
           <script src="scripts/main.js"></script>
           <!-- endbuild -->

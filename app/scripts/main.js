@@ -20,13 +20,34 @@ recognition.onresult = function(event) {
 }
 recognition.start();
 
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+var qsRoomId = getParameterByName('roomId');
+var qsServerIp = getParameterByName('serverIp');
+
+console.log('qsServerIp: ' + qsServerIp + ' qsRoomId: ' + qsRoomId);
 
 var meeting = new Meeting();
 
-var meetingsList = document.getElementById('meetings-list');
+// var meetingsList = document.getElementById('meetings-list');
 var meetingRooms = {};
+
 meeting.onmeeting = function (room) {
-    if (meetingRooms[room.roomid]) return;
+	if (meetingRooms[room.roomid]) return;
+
+    meetingRooms[room.roomid] = room;
+
+	if(qsRoomId === room.roomid){
+		meeting.meet(room);
+		videos.style.visibility = 'visible';
+	}
+
+    /*if (meetingRooms[room.roomid]) return;
     meetingRooms[room.roomid] = room;
 
     var div = document.createElement('div');
@@ -46,7 +67,7 @@ meeting.onmeeting = function (room) {
     	if(room) meeting.meet(room);
     	meetingsList.style.display = 'none';
     	videos.style.visibility = 'visible';
-    }
+    }*/
 };
 
 meeting.establishDataChannel = function (dataChan) {
@@ -84,19 +105,50 @@ meeting.onaddstream = function (e) {
     if (e.type == 'remote') remoteMediaStreams.insertBefore(e.video, remoteMediaStreams.firstChild);
 };
 
-//for some reason, we need to fail for the first socket otherwise it doesn't work! hence using 0.0.0.0.
-var websockets = ['ws://0.0.0.0','ws://54.148.27.246:12034','ws://54.69.7.201:12034','ws://52.10.3.42:12034','ws://52.11.240.209:12034'];
-var currentSocket=0;
+function generateRoom() {
+	var r4 = function() {
+        return Math.floor(Math.random() * 0x10000).toString(16);
+    };
+    return r4() + "-" + r4();
+}
+
+function generateRoomLink() {
+    document.getElementById('room-link').innerHTML = location.href + '?serverIp=' + 
+    	currentOpenIp + '&roomId=' + currentOpenChannel ;
+    document.getElementById('room-div').style.visibility = "visible";
+}
+
+
+//var dummyIp = "0.0.0.0";
+var loadBalancerIp = "capcast-939676402.us-west-2.elb.amazonaws.com";
+var port = ":12034";
+var currentIp = loadBalancerIp;
+var nextIp = currentIp;
+var currentOpenIp;
+var currentOpenChannel;
 
 function initWs(channel, onmessage) {
-	var websocket = new WebSocket(websockets[currentSocket]);
-	console.log("connecting to " + websockets[currentSocket]);
+	var websocket = new WebSocket("ws://" + nextIp + port);
+	console.log("connecting to " + nextIp);
+	currentIp = nextIp;
 	websocket.onopen = function () {
-		console.log("opening " + websockets[currentSocket]);
+		currentOpenIp = currentIp;
+		currentOpenChannel = channel;
+		console.log("opening " + nextIp);
 		websocket.push(JSON.stringify({
 			open: true,
 			channel: channel
 		}));
+		if(!qsRoomId && currentOpenIp != loadBalancerIp){
+			meeting.setup(currentOpenChannel);
+			generateRoomLink();
+			document.getElementById('videos').style.visibility = "visible";
+		}
+
+		if(meeting.getSignaler()){
+			console.log('checking websocket: ' + websocket);
+			meeting.getSignaler().setSocket(websocket);
+		}
 	};
 
 	websocket.push = websocket.send;
@@ -115,28 +167,45 @@ function initWs(channel, onmessage) {
 	};
 
 	websocket.onmessage = function(e) {
+		/*if(currentIp === dummyIp) {
+			nextIp = loadBalancerIp;
+			WebSocket.close();
+		}else */
+
+		if(currentIp === loadBalancerIp){
+			nextIp = JSON.parse(JSON.parse(e.data)).publicIp;
+			if(nextIp) {
+				console.log("closing connection to load balancer and connecting directly to server " + nextIp);
+				websocket.close();
+			}
+		}
 		onmessage(JSON.parse(e.data));
 	};
 
 	websocket.onclose = function(e) {
-		var nextSocket = (currentSocket + 1) % websockets.length;
-		console.log(websockets[currentSocket] + "closed. Connecting to " + websockets[nextSocket]);
-		currentSocket = nextSocket;
-		initWs(channel, onmessage);
+		setTimeout(function(){
+			if(currentIp != loadBalancerIp)
+				nextIp = loadBalancerIp;
+			console.log(currentIp + " closed.");
+			initWs(channel, onmessage);
+		}, 3000);
+		
 	};
 
 	websocket.onerror = function(e) {
-		console.log("error on socket " + websockets[currentSocket] + ". Closing the socket.");
-		websocket.close();
+		console.log("error on socket " + currentIp + ". Closing the socket.");		
 	};
-
-	if(meeting.getSignaler())
-		meeting.getSignaler().setSocket(websocket);
 }
 
 meeting.openSignalingChannel = function(onmessage) {
-	var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
-	initWs(channel, onmessage);
+	//var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
+    if(qsServerIp && qsRoomId) {
+    	nextIp = qsServerIp;
+    	initWs(qsRoomId, onmessage);
+    } else {
+		var channel = generateRoom();
+		initWs(channel, onmessage);
+	}
 };
 
 // using firebase for signaling
@@ -150,7 +219,7 @@ meeting.onuserleft = function (userid) {
 
 // check pre-created meeting rooms
 meeting.check();
-
+/*
 document.getElementById('setup-meeting').onclick = function () {
     
     var meetingRoomName = document.getElementById('meeting-name').value || 'Simple Meeting';
@@ -158,6 +227,8 @@ document.getElementById('setup-meeting').onclick = function () {
     meeting.setup(meetingRoomName);
     
     this.disabled = true;
-    this.parentNode.innerHTML = '<h3><a href="' + location.href + '" target="_blank">Share this link</a></h3>';
+    //this.parentNode.innerHTML = '<h3><a href="' + location.href + '" target="_blank">Share this link</a></h3>';
+
     document.getElementById('videos').style.visibility = "visible";
 };
+*/
