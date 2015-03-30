@@ -33,6 +33,7 @@ body {
   border-radius: 5px;
   border-color:#000000;
   height:300px;
+  overflow: scroll;
 }
 
 .captions-heading{

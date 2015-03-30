@@ -4,6 +4,7 @@ recognition.continuous = true;
 recognition.interimResults = true;
 recognition.lang = "en-US";
 recognition.onresult = function(event) {
+	recognitionHappened=true;
 	var final_transcript = ""
 	for (var i = event.resultIndex; i < event.results.length; ++i) {
     	if (event.results[i].isFinal) {
@@ -18,7 +19,25 @@ recognition.onresult = function(event) {
 		dataChannel.send(final_transcript);
     }
 }
-recognition.start();
+//recognition.start();
+
+var recognitionHappened=false;
+//makes sure recognition keeps working by restarting it if it hasn't worked in a while...
+function nudgeRecognition() {
+	setTimeout(function(){
+		if(!recognitionHappened){
+			console.log('nudging...');
+			try{
+				recognition.start();
+			} catch(err){
+				console.log(err);
+			}
+		}
+		recognitionHappened = false;
+		nudgeRecognition();
+	}, 10000);
+}
+
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -103,6 +122,8 @@ var localMediaStream = document.getElementById('local-streams-container');
 meeting.onaddstream = function (e) {
     if (e.type == 'local') localMediaStream.appendChild(e.video);
     if (e.type == 'remote') remoteMediaStreams.insertBefore(e.video, remoteMediaStreams.firstChild);
+    recognition.start();
+    nudgeRecognition();
 };
 
 function generateRoom() {
