@@ -98,7 +98,7 @@ meeting.establishDataChannel = function (dataChan) {
 	dataChannel = dataChan;
 	dataChannel.onmessage = function (event) {
 		console.log("Got Data Channel Message:", event.data);
-		 document.getElementById('captions').innerHTML += "\n<span class='user-id'>" + meeting.getSignaler().userid + "</span>: " + event.data;
+		 document.getElementById('captions').innerHTML += "\n<span class='user-id'>" + meeting.getSignaler().userid + "</span>: " + event.data + "<br/>";
 
 	};
 
