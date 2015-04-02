@@ -1,6 +1,9 @@
 # capCast
 A video conferencing app that produces speech to text captions in real time. This project will comprise of combined project work for Csc 462/562, Csc 466/566, and Csc 461/561.
 
+##Update: We are live!
+Go [here](http://54.149.63.219) and watch the magic happen! We won't be live for too long though.
+
 ## How to use
 Our [wiki](https://github.com/rpanjwani/capcast/wiki/Simple-Walkthrough) contains a simple walkthrough for our webapp.
 
