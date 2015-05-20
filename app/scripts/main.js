@@ -141,7 +141,7 @@ function generateRoomLink() {
 
 
 //var dummyIp = "0.0.0.0";
-var loadBalancerIp = "capcast-939676402.us-west-2.elb.amazonaws.com";
+var loadBalancerIp = "capcast-lb-2000459634.us-west-2.elb.amazonaws.com";
 var port = ":12034";
 var currentIp = loadBalancerIp;
 var nextIp = currentIp;
